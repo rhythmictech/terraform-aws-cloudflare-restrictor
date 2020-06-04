@@ -1,4 +1,4 @@
-# terraform-aws-cloudflare-restricter [![](https://github.com/rhythmictech/terraform-aws-cloudflare-restricter/workflows/pre-commit-check/badge.svg)](https://github.com/rhythmictech/terraform-aws-cloudflare-restricter/actions) <a href="https://twitter.com/intent/follow?screen_name=RhythmicTech"><img src="https://img.shields.io/twitter/follow/RhythmicTech?style=social&logo=RhythmicTech" alt="follow on Twitter"></a>
+# terraform-aws-cloudflare-restrictor [![](https://github.com/rhythmictech/terraform-aws-cloudflare-restrictor/workflows/pre-commit-check/badge.svg)](https://github.com/rhythmictech/terraform-aws-cloudflare-restrictor/actions) <a href="https://twitter.com/intent/follow?screen_name=RhythmicTech"><img src="https://img.shields.io/twitter/follow/RhythmicTech?style=social&logo=RhythmicTech" alt="follow on Twitter"></a>
 
 This module will automatically manage the ingress rules for any security groups that are appropriately tagged, only permitting CloudFlare IP addresses. The module will create a Lambda that runs once per day, using the public CloudFlare API for known IP addresses to pull the latest IPs and merge them into the security group.
 
@@ -9,8 +9,8 @@ though this can be customized. Any existing ingress rules will be removed when t
 Here's what using the module will look like:
 
 ```
-module "cloudflare-restricter" {
-  source = "rhythmictech/terraform-aws-cloudflare-restricter
+module "cloudflare-restrictor" {
+  source = "rhythmictech/terraform-aws-cloudflare-restrictor"
 }
 ```
 
