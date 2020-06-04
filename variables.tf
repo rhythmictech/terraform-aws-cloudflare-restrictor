@@ -15,7 +15,7 @@ variable "execution_expression" {
 }
 
 variable "name" {
-  default     = "cloudflare-restricter"
+  default     = "cloudflare-restrictor"
   description = "Moniker to apply to all resources in the module"
   type        = string
 }
