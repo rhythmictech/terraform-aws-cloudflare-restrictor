@@ -2,58 +2,36 @@
 A basic example for this repository
 
 ## Code
-Look to [main.tf](./main.tf), or be helpful and copy/paste that code here.
+```
+
+module "this" {
+  source = "../.."
+
+  name = "test"
+}
+```
 
 ## Applying
 ```
->  alias tf="terraform"
->  tf apply
+>  terraform apply
 
-Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+module.this.aws_iam_role.this: Creating...
+module.this.aws_cloudwatch_event_rule.this: Creating...
+module.this.aws_iam_policy.this: Creating...
+module.this.aws_iam_role.this: Creation complete after 0s [id=test20200604145510752600000002]
+module.this.aws_iam_role_policy_attachment.execution: Creating...
+module.this.aws_lambda_function.this: Creating...
+module.this.aws_cloudwatch_event_rule.this: Creation complete after 0s [id=test-daily]
+module.this.aws_iam_policy.this: Creation complete after 0s [id=arn:aws:iam::951703363424:policy/test20200604145510749000000001]
+module.this.aws_iam_role_policy_attachment.this: Creating...
+module.this.aws_iam_role_policy_attachment.execution: Creation complete after 0s [id=test20200604145510752600000002-20200604145511227700000003]
+module.this.aws_iam_role_policy_attachment.this: Creation complete after 0s [id=test20200604145510752600000002-20200604145511332200000004]
+module.this.aws_lambda_function.this: Still creating... [10s elapsed]
+module.this.aws_lambda_function.this: Creation complete after 14s [id=test-cloudflareupdater]
+module.this.aws_lambda_permission.this: Creating...
+module.this.aws_cloudwatch_event_target.this: Creating...
+module.this.aws_lambda_permission.this: Creation complete after 0s [id=terraform-20200604145524937300000005]
+module.this.aws_cloudwatch_event_target.this: Creation complete after 0s [id=test-daily-terraform-20200604145524937300000006]
 
-Outputs:
-
-example = {
-  "tags_module" = {
-    "name" = "TEST"
-    "name32" = "TEST"
-    "name6" = "TEST"
-    "namenosymbols" = "TEST"
-    "tags" = {
-      "Name" = "TEST"
-      "terraform_managed" = true
-      "terraform_module" = "terraform-terraform-tags-1.0.0"
-      "terraform_root_module" = "."
-      "terraform_workspace" = "default"
-    }
-    "tags_as_list_of_maps" = [
-      {
-        "key" = "Name"
-        "value" = "TEST"
-      },
-      {
-        "key" = "terraform_managed"
-        "value" = true
-      },
-      {
-        "key" = "terraform_module"
-        "value" = "terraform-terraform-tags-1.0.0"
-      },
-      {
-        "key" = "terraform_root_module"
-        "value" = "."
-      },
-      {
-        "key" = "terraform_workspace"
-        "value" = "default"
-      },
-    ]
-    "tags_no_name" = {
-      "terraform_managed" = true
-      "terraform_module" = "terraform-terraform-tags-1.0.0"
-      "terraform_root_module" = "."
-      "terraform_workspace" = "default"
-    }
-  }
-}
+Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
 ```

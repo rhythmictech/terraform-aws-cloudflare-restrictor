@@ -1,10 +1,6 @@
 
-module "example" {
+module "this" {
   source = "../.."
 
   name = "test"
-}
-
-output "example" {
-  value = module.example
 }
