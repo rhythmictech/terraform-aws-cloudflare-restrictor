@@ -181,7 +181,6 @@ def update_security_group_policies(ip_addresses):
                 if not check_ipv4_rule_exists(current_rules, ipv4_cidr, port):
                    add_ipv4_rule(security_group, ipv4_cidr, port)
 
-        logger.debug("Checking for ipv6 rules to add")
         # IPv6 -- because of boto3 syntax, this has to be separate
         # remove old addresses
         logger.debug("Checking for ipv6 rules to remove")
@@ -193,6 +192,7 @@ def update_security_group_policies(ip_addresses):
                             security_group, ip_range['CidrIpv6'], port)
 
         # add new addresses
+        logger.debug("Checking for ipv6 rules to add")
         for ipv6_cidr in ip_addresses['ipv6_cidrs']:
             for port in ports:
                 if not check_ipv6_rule_exists(current_rules, ipv6_cidr, port):
