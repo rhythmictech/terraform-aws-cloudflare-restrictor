@@ -31,8 +31,8 @@ data "aws_iam_policy_document" "this" {
   statement {
     actions = [
       "ec2:AuthorizeSecurityGroupIngress",
-      "ec2:RevokeSecurityGroupIngress",
       "ec2:DescribeSecurityGroups",
+      "ec2:RevokeSecurityGroupIngress"
     ]
 
     resources = ["*"]
@@ -60,7 +60,6 @@ resource "aws_iam_role_policy_attachment" "this" {
   role       = aws_iam_role.this.name
 }
 
-
 resource "aws_lambda_function" "this" {
   filename         = data.archive_file.this.output_path
   function_name    = "${var.name}-cloudflareupdater"
@@ -73,10 +72,9 @@ resource "aws_lambda_function" "this" {
 
   environment {
     variables = {
+      PORTS_LIST = join(",", var.allowed_ports)
       TAG_KEY    = var.tag_key
       TAG_VALUE  = var.tag_value
-      PORTS_LIST = join(",", var.allowed_ports)
-
     }
   }
 
