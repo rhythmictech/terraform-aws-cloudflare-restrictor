@@ -86,7 +86,7 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_cloudwatch_event_rule" "this" {
-  name_prefix         = "${var.name}-scheduled-rule"
+  name_prefix         = "${var.name}-scheduled-rule-"
   schedule_expression = var.execution_expression
 
   lifecycle {
