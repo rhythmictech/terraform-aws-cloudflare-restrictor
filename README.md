@@ -1,43 +1,46 @@
-# terraform-anycloud-template [![](https://github.com/rhythmictech/terraform-anycloud-template/workflows/pre-commit-check/badge.svg)](https://github.com/rhythmictech/terraform-anycloud-template/actions) <a href="https://twitter.com/intent/follow?screen_name=RhythmicTech"><img src="https://img.shields.io/twitter/follow/RhythmicTech?style=social&logo=RhythmicTech" alt="follow on Twitter"></a>
-Template repository for terraform modules. Good for any cloud and any provider.
+# terraform-aws-cloudflare-restricter [![](https://github.com/rhythmictech/terraform-aws-cloudflare-restricter/workflows/pre-commit-check/badge.svg)](https://github.com/rhythmictech/terraform-aws-cloudflare-restricter/actions) <a href="https://twitter.com/intent/follow?screen_name=RhythmicTech"><img src="https://img.shields.io/twitter/follow/RhythmicTech?style=social&logo=RhythmicTech" alt="follow on Twitter"></a>
+
+This module will automatically manage the ingress rules for any security groups that are appropriately tagged, only permitting CloudFlare IP addresses. The module will create a Lambda that runs once per day, using the public CloudFlare API for known IP addresses to pull the latest IPs and merge them into the security group.
+
+By default, the Lambda will update any security group with the tag key `CLOUDFLARE_MANAGED` set to `true`,
+though this can be customized. Any existing ingress rules will be removed when this tag key/value match. Since the Lambda only runs once per day, it is recommended that it be manually triggered whenever a new security group is added.
 
 ## Example
-Here's what using the module will look like
+Here's what using the module will look like:
+
 ```
-module "example" {
-  source = "rhythmictech/terraform-mycloud-mymodule
+module "cloudflare-restricter" {
+  source = "rhythmictech/terraform-aws-cloudflare-restricter
 }
 ```
-
-## About
-A bit about this module
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12.25 |
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| archive | n/a |
+| aws | n/a |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| name | Moniker to apply to all resources in the module | `string` | n/a | yes |
+| allowed\_ports | Ports to allow traffic from CloudFlare on (recommended to only use 443) | `list(number)` | <pre>[<br>  443<br>]</pre> | no |
+| execution\_expression | cron expression for how frequently rules should be updated | `string` | `"rate(1 day)"` | no |
+| name | Moniker to apply to all resources in the module | `string` | `"cloudflare-restricter"` | no |
+| tag\_key | Tag key to expect on security groups that will be managed by this module | `string` | `"CLOUDFLARE_MANAGED"` | no |
+| tag\_value | Tag value to expect on security groups that will be managed by this module | `string` | `"true"` | no |
 | tags | User-Defined tags | `map(string)` | `{}` | no |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| tags\_module | Tags Module in it's entirety |
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-## The Giants underneath this module
-- pre-commit.com/
-- terraform.io/
-- github.com/tfutils/tfenv
-- github.com/segmentio/terraform-docs
