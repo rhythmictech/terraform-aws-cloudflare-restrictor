@@ -19,7 +19,7 @@ module "cloudflare-restricter" {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.25 |
+| terraform | >= 0.12.19 |
 
 ## Providers
 

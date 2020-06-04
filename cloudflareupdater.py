@@ -162,14 +162,6 @@ def update_security_group_policies(ip_addresses):
         current_rules = security_group['IpPermissions']
 
         # IPv4
-        # add new addresses
-        logger.debug("Checking for rules to add")
-        for ipv4_cidr in ip_addresses['ipv4_cidrs']:
-            logger.debug("Looking for %s" % (ipv4_cidr))
-            for port in ports:
-                if not check_ipv4_rule_exists(current_rules, ipv4_cidr, port):
-                   add_ipv4_rule(security_group, ipv4_cidr, port)
-
         logger.debug("Checking for rules to remove")
         # remove old addresses
         for port in ports:
@@ -181,14 +173,16 @@ def update_security_group_policies(ip_addresses):
                             delete_ipv4_rule(
                                 security_group, ip_range['CidrIp'], port)
 
+        # add new addresses
+        logger.debug("Checking for rules to add")
+        for ipv4_cidr in ip_addresses['ipv4_cidrs']:
+            logger.debug("Looking for %s" % (ipv4_cidr))
+            for port in ports:
+                if not check_ipv4_rule_exists(current_rules, ipv4_cidr, port):
+                   add_ipv4_rule(security_group, ipv4_cidr, port)
+
         logger.debug("Checking for ipv6 rules to add")
         # IPv6 -- because of boto3 syntax, this has to be separate
-        # add new addresses
-        for ipv6_cidr in ip_addresses['ipv6_cidrs']:
-            for port in ports:
-                if not check_ipv6_rule_exists(current_rules, ipv6_cidr, port):
-                    add_ipv6_rule(security_group, ipv6_cidr, port)
-
         # remove old addresses
         logger.debug("Checking for ipv6 rules to remove")
         for port in ports:
@@ -197,6 +191,12 @@ def update_security_group_policies(ip_addresses):
                     if ip_range['CidrIpv6'] not in ip_addresses['ipv6_cidrs']:
                         delete_ipv6_rule(
                             security_group, ip_range['CidrIpv6'], port)
+
+        # add new addresses
+        for ipv6_cidr in ip_addresses['ipv6_cidrs']:
+            for port in ports:
+                if not check_ipv6_rule_exists(current_rules, ipv6_cidr, port):
+                    add_ipv6_rule(security_group, ipv6_cidr, port)
 
 
 def lambda_handler(event, context):

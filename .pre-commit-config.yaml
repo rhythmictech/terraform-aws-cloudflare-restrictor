@@ -41,3 +41,5 @@ repos:
         args:
           - --markdown-linebreak-ext=md
         exclude: README.md
+      - id: check-ast
+      - id: check-builtin-literals

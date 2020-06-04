@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "assume" {
 }
 
 resource "aws_iam_role" "this" {
-  name_prefix        = var.name
+  name_prefix        = "${var.name}-"
   assume_role_policy = data.aws_iam_policy_document.assume.json
 }
 
@@ -31,7 +31,6 @@ data "aws_iam_policy_document" "this" {
   statement {
     actions = [
       "ec2:AuthorizeSecurityGroupIngress",
-      "ec2:DescribeSecurityGroups",
       "ec2:RevokeSecurityGroupIngress"
     ]
 
@@ -51,7 +50,7 @@ data "aws_iam_policy_document" "this" {
 }
 
 resource "aws_iam_policy" "this" {
-  name_prefix = var.name
+  name_prefix = "${var.name}-"
   policy      = data.aws_iam_policy_document.this.json
 }
 
@@ -87,7 +86,7 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_cloudwatch_event_rule" "this" {
-  name                = "${var.name}-daily"
+  name_prefix         = "${var.name}-scheduled-rule"
   schedule_expression = var.execution_expression
 
   lifecycle {
