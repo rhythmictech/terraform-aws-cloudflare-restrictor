@@ -64,7 +64,7 @@ resource "aws_lambda_function" "this" {
   function_name    = "${var.name}-cloudflareupdater"
   handler          = "cloudflareupdater.lambda_handler"
   role             = aws_iam_role.this.arn
-  runtime          = "python3.7"
+  runtime          = "python3.11"
   source_code_hash = data.archive_file.this.output_base64sha256
   tags             = var.tags
   timeout          = 180
